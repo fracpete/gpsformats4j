@@ -91,6 +91,7 @@ public class CSV
    *
    * @param data	the data to write
    * @param output	the output file
+   * @return		null if successful, otherwise error message
    */
   @Override
   public String write(List<CSVRecord> data, File output) {

@@ -65,6 +65,7 @@ public abstract class AbstractFormat {
    *
    * @param data	the data to write
    * @param output	the output file
+   * @return		null if successful, otherwise error message
    */
   public abstract String write(List<CSVRecord> data, File output);
 }
