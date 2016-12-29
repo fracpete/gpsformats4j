@@ -96,8 +96,7 @@ public class TCX
 	points = ((Element) tracks.item(t)).getElementsByTagName("Trackpoint");
 	for (p = 0; p < points.getLength(); p++) {
 	  count++;
-	  values   = new ArrayList<>();
-	  map      = new HashMap<>();
+	  values = new ArrayList<>();
 	  // track
 	  values.add("" + t);
 	  // time
@@ -113,7 +112,7 @@ public class TCX
 	  children = ((Element) points.item(p)).getElementsByTagName("AltitudeMeters");
 	  values.add(children.item(0).getTextContent().trim());
 	  // add record
-	  rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map);
+	  rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map, null, count, -1);
 	  result.add(rec);
 	}
       }
