@@ -38,8 +38,7 @@ import java.nio.charset.Charset;
 /**
  * Ancestor for XML-based formats.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @author FracPete (fracpete at gmail dot com)
  */
 public abstract class AbstractXMLFormat
   extends AbstractFormat {

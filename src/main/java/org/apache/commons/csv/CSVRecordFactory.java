@@ -15,7 +15,7 @@
 
 /**
  * CSVRecordFactory.java
- * Copyright (C) 2016 University of Waikato, Hamilton, NZ
+ * Copyright (C) 2016 FracPete
  */
 
 package org.apache.commons.csv;
@@ -25,8 +25,7 @@ import java.util.Map;
 /**
  * Factory for CSVRecord instances.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @author FracPete (fracpete at gmail dot com)
  */
 public class CSVRecordFactory {
 

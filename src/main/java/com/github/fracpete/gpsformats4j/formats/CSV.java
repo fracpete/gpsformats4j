@@ -38,8 +38,7 @@ import java.util.Map;
 /**
  * CSV format.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @author FracPete (fracpete at gmail dot com)
  */
 public class CSV
   extends AbstractFormat {

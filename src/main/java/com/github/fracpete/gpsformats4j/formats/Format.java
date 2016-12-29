@@ -14,42 +14,44 @@
  */
 
 /**
- * AbstractFormat.java
+ * Format.java
  * Copyright (C) 2016 FracPete
  */
 package com.github.fracpete.gpsformats4j.formats;
 
 import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
 
 /**
- * Ancestor for formats.
+ * Interface for formats.
  *
  * @author FracPete (fracpete at gmail dot com)
  */
-public abstract class AbstractFormat
-  implements Format {
+public interface Format {
 
-  /** the logger instance. */
-  protected Logger m_Logger;
+  /** the key for the track. */
+  public final static String KEY_TRACK = "Track";
 
-  /**
-   * Initializes the format.
-   */
-  protected AbstractFormat() {
-    m_Logger = LoggerFactory.getLogger(getClass());
-  }
+  /** the key for the time. */
+  public final static String KEY_TIME = "Time";
+
+  /** the key for the longitude. */
+  public final static String KEY_LON = "Longitude";
+
+  /** the key for the latitiude. */
+  public final static String KEY_LAT = "Latitude";
+
+  /** the key for the elevation. */
+  public final static String KEY_ELEVATION = "Elevation";
 
   /**
    * Returns whether reading is supported.
    *
    * @return		true if supported
    */
-  public abstract boolean canRead();
+  public boolean canRead();
 
   /**
    * Reads the file.
@@ -57,14 +59,14 @@ public abstract class AbstractFormat
    * @param input	the input file
    * @return		the collected data, null in case of an error
    */
-  public abstract List<CSVRecord> read(File input);
+  public List<CSVRecord> read(File input);
 
   /**
    * Returns whether writing is supported.
    *
    * @return		true if supported
    */
-  public abstract boolean canWrite();
+  public boolean canWrite();
 
   /**
    * Writes to a file.
@@ -73,5 +75,5 @@ public abstract class AbstractFormat
    * @param output	the output file
    * @return		null if successful, otherwise error message
    */
-  public abstract String write(List<CSVRecord> data, File output);
+  public String write(List<CSVRecord> data, File output);
 }

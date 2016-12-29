@@ -32,8 +32,7 @@ import java.util.List;
 /**
  * GPX format.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @author FracPete (fracpete at gmail dot com)
  */
 public class GPX
   extends AbstractXMLFormat {
