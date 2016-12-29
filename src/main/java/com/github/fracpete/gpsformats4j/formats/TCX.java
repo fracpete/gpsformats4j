@@ -26,8 +26,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +39,7 @@ import java.util.Map;
  * @version $Revision$
  */
 public class TCX
-  extends AbstractFormat {
+  extends AbstractXMLFormat {
 
   /**
    * Returns whether reading is supported.
@@ -62,8 +60,6 @@ public class TCX
   @Override
   public List<CSVRecord> read(File input) {
     List<CSVRecord>		result;
-    DocumentBuilderFactory 	factory;
-    DocumentBuilder 		builder;
     Document 			doc;
     NodeList			tracks;
     NodeList			points;
@@ -77,13 +73,7 @@ public class TCX
 
     result = new ArrayList<>();
     try {
-      factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(true);
-      factory.setNamespaceAware(true);
-      factory.setIgnoringComments(true);
-      factory.setIgnoringElementContentWhitespace(true);
-      builder = factory.newDocumentBuilder();
-      doc     = builder.parse(input);
+      doc     = readXML(input);
       tracks  = doc.getElementsByTagName("Track");
       count   = 0;
       map     = new HashMap<>();

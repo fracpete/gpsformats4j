@@ -21,21 +21,12 @@
 package com.github.fracpete.gpsformats4j.formats;
 
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -45,7 +36,7 @@ import java.util.List;
  * @version $Revision$
  */
 public class GPX
-  extends AbstractFormat {
+  extends AbstractXMLFormat {
 
   /**
    * Returns whether reading is supported.
@@ -96,12 +87,7 @@ public class GPX
     Element 			seg;
     Element 			point;
     String			oldTrack;
-    TransformerFactory 		tfactory;
-    Transformer 		transformer;
-    StringWriter 		swriter;
-    FileWriter 			fwriter;
 
-    fwriter  = null;
     try {
       factory = DocumentBuilderFactory.newInstance();
       builder = factory.newDocumentBuilder();
@@ -139,24 +125,11 @@ public class GPX
 	point.appendChild(child);
       }
 
-      tfactory = TransformerFactory.newInstance();
-      tfactory.setAttribute("indent-number", 2);
-      transformer = tfactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.ENCODING, Charset.defaultCharset().toString());
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      swriter = new StringWriter();
-      transformer.transform(new DOMSource(doc), new StreamResult(swriter));
-      fwriter = new FileWriter(output);
-      IOUtils.write(swriter.toString(), fwriter);
+      return writeXML(doc, output);
     }
     catch (Exception e) {
       m_Logger.error("Failed to write: " + output, e);
       return "Failed to write: " + output + "\n" + e;
     }
-    finally {
-      IOUtils.closeQuietly(fwriter);
-    }
-
-    return null;
   }
 }
