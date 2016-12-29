@@ -24,13 +24,16 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVRecordFactory;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * CSV format.
@@ -95,16 +98,40 @@ public class CSV
    */
   @Override
   public String write(List<CSVRecord> data, File output) {
-    CSVPrinter	printer;
-    FileWriter	writer;
+    CSVPrinter		printer;
+    FileWriter		writer;
+    boolean		first;
+    int			i;
+    CSVRecord		header;
+    List<String>	values;
+    Map<String,Integer>	map;
 
     writer  = null;
     printer = null;
     try {
-      writer = new FileWriter(output);
+      writer  = new FileWriter(output);
       printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
-      for (CSVRecord rec: data)
+      first   = true;
+      for (CSVRecord rec: data) {
+	if (first) {
+	  map = new HashMap<>();
+	  map.put(KEY_TRACK, 0);
+	  map.put(KEY_TIME, 1);
+	  map.put(KEY_LAT, 2);
+	  map.put(KEY_LON, 3);
+	  map.put(KEY_ELEVATION, 4);
+	  values = new ArrayList<>();
+	  values.add(KEY_TRACK);
+	  values.add(KEY_TIME);
+	  values.add(KEY_LAT);
+	  values.add(KEY_LON);
+	  values.add(KEY_ELEVATION);
+	  header = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map);
+	  printer.printRecord(header);
+	}
 	printer.printRecord(rec);
+	first = false;
+      }
       printer.flush();
       printer.close();
     }

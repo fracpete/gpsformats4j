@@ -28,6 +28,21 @@ import java.util.List;
 
 public abstract class AbstractFormat {
 
+  /** the key for the track. */
+  public final static String KEY_TRACK = "Track";
+
+  /** the key for the time. */
+  public final static String KEY_TIME = "Time";
+
+  /** the key for the longitude. */
+  public final static String KEY_LON = "Longitude";
+
+  /** the key for the latitiude. */
+  public final static String KEY_LAT = "Latitude";
+
+  /** the key for the elevation. */
+  public final static String KEY_ELEVATION = "Elevation";
+
   /** the logger instance. */
   protected Logger m_Logger;
 
