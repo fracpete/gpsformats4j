@@ -21,13 +21,16 @@
 package com.github.fracpete.gpsformats4j.formats;
 
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVRecordFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GPX format.
@@ -45,7 +48,7 @@ public class GPX
    */
   @Override
   public boolean canRead() {
-    return false;
+    return true;
   }
 
   /**
@@ -56,7 +59,59 @@ public class GPX
    */
   @Override
   public List<CSVRecord> read(File input) {
-    return null;
+    List<CSVRecord>		result;
+    Document 			doc;
+    NodeList 			segs;
+    NodeList			children;
+    Element			seg;
+    int				t;
+    int				p;
+    CSVRecord			rec;
+    List<String>		values;
+    Map<String,Integer> 	map;
+    int				count;
+
+    result = new ArrayList<>();
+    try {
+      doc   = readXML(input);
+      segs  = doc.getElementsByTagName("trkseg");
+      count = 0;
+      map   = new HashMap<>();
+      map.put(KEY_TRACK, 0);
+      map.put(KEY_TIME, 1);
+      map.put(KEY_LAT, 2);
+      map.put(KEY_LON, 3);
+      map.put(KEY_ELEVATION, 4);
+      for (t = 0; t < segs.getLength(); t++) {
+	segs = ((Element) segs.item(t)).getElementsByTagName("trkpt");
+	for (p = 0; p < segs.getLength(); p++) {
+	  count++;
+	  values = new ArrayList<>();
+	  seg    = (Element) segs.item(p);
+	  // track
+	  values.add("" + t);
+	  // time
+	  children = seg.getElementsByTagName("time");
+	  values.add(children.item(0).getTextContent().trim());
+	  // lat
+	  values.add(seg.getAttribute("lat").trim());
+	  // lon
+	  values.add(seg.getAttribute("lon").trim());
+	  // elevation
+	  children = seg.getElementsByTagName("ele");
+	  values.add(children.item(0).getTextContent().trim());
+	  // add record
+	  rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map, null, count, -1);
+	  result.add(rec);
+	}
+      }
+    }
+    catch (Exception e) {
+      m_Logger.error("Failed to read: " + input, e);
+      return null;
+    }
+
+    return result;
   }
 
   /**
@@ -78,28 +133,23 @@ public class GPX
    */
   @Override
   public String write(List<CSVRecord> data, File output) {
-    DocumentBuilderFactory 	factory;
-    DocumentBuilder 		builder;
-    Document 			doc;
-    Element 			child;
-    Element 			gpx;
-    Element 			track;
-    Element 			seg;
-    Element 			point;
-    String			oldTrack;
+    Document 	doc;
+    Element 	child;
+    Element 	gpx;
+    Element 	track;
+    Element 	seg;
+    Element 	point;
+    String	oldTrack;
 
     try {
-      factory = DocumentBuilderFactory.newInstance();
-      builder = factory.newDocumentBuilder();
-      doc     = builder.newDocument();
-      gpx     = doc.createElement("gpx");
+      gpx = newDocument("gpx");
+      doc = gpx.getOwnerDocument();
       gpx.setAttribute("xmlns", "http://www.topografix.com/GPX/1/1");
       gpx.setAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
       gpx.setAttribute("xmlns:gpxtpx", "\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
-      gpx.setAttribute("creator", "gpsformats4j");
       gpx.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
       gpx.setAttribute("xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd");
-      doc.appendChild(gpx);
+      gpx.setAttribute("creator", "gpsformats4j");
       oldTrack = "";
       seg      = null;
       for (CSVRecord rec: data) {

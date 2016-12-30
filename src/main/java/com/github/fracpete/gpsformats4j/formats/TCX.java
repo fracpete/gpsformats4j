@@ -64,6 +64,7 @@ public class TCX
     NodeList			tracks;
     NodeList			points;
     NodeList			children;
+    Element			point;
     int				t;
     int				p;
     CSVRecord			rec;
@@ -87,19 +88,20 @@ public class TCX
 	for (p = 0; p < points.getLength(); p++) {
 	  count++;
 	  values = new ArrayList<>();
+	  point  = (Element) points.item(p);
 	  // track
 	  values.add("" + t);
 	  // time
-	  children = ((Element) points.item(p)).getElementsByTagName("Time");
+	  children = point.getElementsByTagName("Time");
 	  values.add(children.item(0).getTextContent().trim());
 	  // lat
-	  children = ((Element) points.item(p)).getElementsByTagName("LatitudeDegrees");
+	  children = point.getElementsByTagName("LatitudeDegrees");
 	  values.add(children.item(0).getTextContent().trim());
 	  // lon
-	  children = ((Element) points.item(p)).getElementsByTagName("LongitudeDegrees");
+	  children = point.getElementsByTagName("LongitudeDegrees");
 	  values.add(children.item(0).getTextContent().trim());
 	  // elevation
-	  children = ((Element) points.item(p)).getElementsByTagName("AltitudeMeters");
+	  children = point.getElementsByTagName("AltitudeMeters");
 	  values.add(children.item(0).getTextContent().trim());
 	  // add record
 	  rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map, null, count, -1);
@@ -122,7 +124,7 @@ public class TCX
    */
   @Override
   public boolean canWrite() {
-    return false;
+    return true;
   }
 
   /**
@@ -134,6 +136,95 @@ public class TCX
    */
   @Override
   public String write(List<CSVRecord> data, File output) {
-    return "Not supported";
+    Document 	doc;
+    Element 	child;
+    Element 	tcx;
+    Element 	acts;
+    Element 	act;
+    Element 	lap;
+    Element 	track;
+    Element 	pos;
+    Element 	point;
+    String	oldTrack;
+
+    try {
+      tcx = newDocument("TrainingCenterDatabase");
+      doc = tcx.getOwnerDocument();
+      tcx.setAttribute("xmlns", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2");
+      tcx.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+      tcx.setAttribute("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd");
+      acts     = doc.createElement("Activities");
+      tcx.appendChild(acts);
+      oldTrack = "";
+      track    = null;
+      for (CSVRecord rec: data) {
+	if (!oldTrack.equals(rec.get(KEY_TRACK))) {
+	  oldTrack = rec.get(KEY_TRACK);
+	  act = doc.createElement("Activity");
+	  act.setAttribute("Sport", "Other");
+	  acts.appendChild(act);
+
+	  // id
+	  child = doc.createElement("Id");
+	  child.setTextContent(rec.get(KEY_TRACK));
+	  act.appendChild(child);
+
+	  // lap
+	  lap = doc.createElement("Lap");
+	  lap.setAttribute("StartTime", rec.get(KEY_TIME));
+	  act.appendChild(lap);
+	  child = doc.createElement("TotalTimeSeconds");
+	  child.setTextContent("0");
+	  lap.appendChild(child);
+	  child = doc.createElement("DistanceMeters");
+	  child.setTextContent("0");
+	  lap.appendChild(child);
+	  child = doc.createElement("Calories");
+	  child.setTextContent("0");
+	  lap.appendChild(child);
+
+	  // track
+	  track = doc.createElement("Track");
+	  lap.appendChild(track);
+	}
+
+	// trackpoint
+	point = doc.createElement("Trackpoint");
+	track.appendChild(point);
+
+	// time
+	child = doc.createElement("Time");
+	child.setTextContent(rec.get(KEY_TIME));
+	point.appendChild(child);
+
+	// position
+	pos = doc.createElement("Position");
+	point.appendChild(pos);
+
+	child = doc.createElement("LatitudeDegrees");
+	child.setTextContent(rec.get(KEY_LAT));
+	pos.appendChild(child);
+
+	child = doc.createElement("LongitudeDegrees");
+	child.setTextContent(rec.get(KEY_LON));
+	pos.appendChild(child);
+
+	// elevation
+	child = doc.createElement("AltitudeMeters");
+	child.setTextContent(rec.get(KEY_ELEVATION));
+	point.appendChild(child);
+
+	// distance
+	child = doc.createElement("DistanceMeters");
+	child.setTextContent("0.0");
+	point.appendChild(child);
+      }
+
+      return writeXML(doc, output);
+    }
+    catch (Exception e) {
+      m_Logger.error("Failed to write: " + output, e);
+      return "Failed to write: " + output + "\n" + e;
+    }
   }
 }
