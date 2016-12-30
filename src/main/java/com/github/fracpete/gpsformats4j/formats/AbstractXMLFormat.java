@@ -22,6 +22,7 @@ package com.github.fracpete.gpsformats4j.formats;
 
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -66,6 +67,45 @@ public abstract class AbstractXMLFormat
       m_Logger.error("Failed to read: " + input, e);
       return null;
     }
+  }
+
+  /**
+   * Creates a new document.
+   *
+   * @return		the new document, null if failed to create
+   */
+  protected Document newDocument() {
+    DocumentBuilderFactory 	factory;
+    DocumentBuilder 		builder;
+
+    try {
+      factory = DocumentBuilderFactory.newInstance();
+      builder = factory.newDocumentBuilder();
+      return builder.newDocument();
+    }
+    catch (Exception e) {
+      m_Logger.error("Failed to create new XML document!", e);
+      return null;
+    }
+  }
+
+  /**
+   * Creates a new document, adds the specified root element and returns it.
+   *
+   * @return		the root element, null if failed to create
+   */
+  protected Element newDocument(String root) {
+    Document 	doc;
+    Element	result;
+
+    doc = newDocument();
+    if (doc == null)
+      return null;
+
+    result = doc.createElement(root);
+    doc.appendChild(result);
+
+    return result;
   }
 
   /**
