@@ -10,7 +10,7 @@ TCX files exported from a proprietary app into GPX ones so the
 
 Currently the following formats are supported:
 
-* CSV
+* CSV (requires column in this order: track, time, lat, lon, elevation)
 * [GPX](https://en.wikipedia.org/wiki/GPS_Exchange_Format)
 * [TCX](https://en.wikipedia.org/wiki/Training_Center_XML)
 

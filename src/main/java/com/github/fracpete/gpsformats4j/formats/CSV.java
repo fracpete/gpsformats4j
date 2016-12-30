@@ -36,7 +36,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * CSV format.
+ * CSV format. Requires the following columns in this order:
+ * <ol>
+ *   <li>track</li>
+ *   <li>time</li>
+ *   <li>latitude</li>
+ *   <li>longitude</li>
+ *   <li>elevation</li>
+ * </ol>
  *
  * @author FracPete (fracpete at gmail dot com)
  */
