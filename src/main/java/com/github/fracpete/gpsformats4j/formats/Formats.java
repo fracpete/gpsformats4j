@@ -15,7 +15,7 @@
 
 /**
  * Formats.java
- * Copyright (C) 2016 University of Waikato, Hamilton, NZ
+ * Copyright (C) 2016 FracPete
  */
 
 package com.github.fracpete.gpsformats4j.formats;
@@ -23,8 +23,7 @@ package com.github.fracpete.gpsformats4j.formats;
 /**
  * Helper class for all formats.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @author FracPete (fracpete at gmail dot com)
  */
 public class Formats {
 

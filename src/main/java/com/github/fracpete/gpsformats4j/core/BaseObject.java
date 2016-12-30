@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Ancestor for objects.
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
+ * @author FracPete (fracpete at gmail dot com)
  */
 public class BaseObject {
 
