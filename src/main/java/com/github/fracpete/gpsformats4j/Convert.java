@@ -83,20 +83,24 @@ public class Convert
 
     parser.addArgument("--" + INPUT_FILE)
       .metavar(INPUT_FILE)
+      .required(true)
       .type(String.class)
       .help("The input file to convert.");
     parser.addArgument("--" + INPUT_FORMAT)
       .metavar(INPUT_FORMAT)
+      .required(true)
       .type(String.class)
       .choices(formats)
       .help("The input format.");
 
     parser.addArgument("--" + OUTPUT_FILE)
       .metavar(OUTPUT_FILE)
+      .required(true)
       .type(String.class)
       .help("The output file to generate.");
     parser.addArgument("--" + OUTPUT_FORMAT)
       .metavar(OUTPUT_FORMAT)
+      .required(true)
       .type(String.class)
       .choices(formats)
       .help("The output format.");
