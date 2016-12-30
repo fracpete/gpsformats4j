@@ -3,8 +3,8 @@
 GPS format conversions in Java.
 
 Very simple, very hacky. ;-) The main reason was to be able to convert
-TCX files exported from a proprietary app into GPX ones so the OsmAnd app 
-can display them.
+TCX files exported from a proprietary app into GPX ones so the 
+[OsmAnd~](https://fossdroid.com/a/osmand~.html) app can display them.
 
 ## Supported formats
 
