@@ -57,7 +57,7 @@ public abstract class AbstractXMLFormat
     try {
       m_Logger.info("Reading: " + input);
       factory = DocumentBuilderFactory.newInstance();
-      factory.setValidating(true);
+      factory.setValidating(false);
       factory.setNamespaceAware(true);
       factory.setIgnoringComments(true);
       factory.setIgnoringElementContentWhitespace(true);
