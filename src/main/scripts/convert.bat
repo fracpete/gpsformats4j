@@ -43,7 +43,7 @@ goto endInit
 @REM Reaching here means variables are defined and arguments have been captured
 :endInit
 
-%JCMD% -Xmx%MEMORY% -classpath %CLASSPATH% -Dbasedir="%BASEDIR%" %MAIN%
+%JCMD% -Xmx%MEMORY% -classpath %CLASSPATH% -Dbasedir="%BASEDIR%" %MAIN% %*
 if ERRORLEVEL 1 goto error
 goto end
 

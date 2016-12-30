@@ -98,4 +98,5 @@ MAIN=com.github.fracpete.gpsformats4j.Convert
   -classpath "$CLASSPATH" \
   -Dbasedir="$BASEDIR" \
   -Xmx$MEMORY \
-  $MAIN
+  $MAIN \
+  "$@"
