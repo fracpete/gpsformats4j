@@ -36,6 +36,7 @@ import java.util.Map;
  * TCX format (proprietary Garmin XML format).
  *
  * @author FracPete (fracpete at gmail dot com)
+ * @see Formats#allFormats()
  */
 public class TCX
   extends AbstractXMLFormat {
