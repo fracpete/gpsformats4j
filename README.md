@@ -50,7 +50,7 @@ if (msg != null)
 
 Use the following dependency to include the library in your Maven project:
 ```xml
-   <dependency>
+    <dependency>
       <groupId>com.github.fracpete</groupId>
       <artifactId>gpsformats4j</artifactId>
       <version>0.0.1</version>
