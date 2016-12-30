@@ -66,6 +66,7 @@ public class CSV
 
     result = new ArrayList<>();
     try {
+      m_Logger.info("Reading: " + input);
       parser = CSVParser.parse(input, Charset.defaultCharset(), CSVFormat.DEFAULT);
       for (CSVRecord rec: parser)
 	result.add(rec);
@@ -108,6 +109,7 @@ public class CSV
     writer  = null;
     printer = null;
     try {
+      m_Logger.info("Writing: " + output);
       writer  = new FileWriter(output);
       printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
       first   = true;

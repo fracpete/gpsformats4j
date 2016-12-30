@@ -55,6 +55,7 @@ public abstract class AbstractXMLFormat
     DocumentBuilder 		builder;
 
     try {
+      m_Logger.info("Reading: " + input);
       factory = DocumentBuilderFactory.newInstance();
       factory.setValidating(true);
       factory.setNamespaceAware(true);
@@ -123,6 +124,7 @@ public abstract class AbstractXMLFormat
 
     fwriter  = null;
     try {
+      m_Logger.info("Writing: " + output);
       tfactory = TransformerFactory.newInstance();
       tfactory.setAttribute("indent-number", 2);
       transformer = tfactory.newTransformer();

@@ -212,7 +212,7 @@ public class Convert
    *
    * @return		null if successful, otherwise error message
    */
-  public String execute() {
+  protected String doExecute() {
     Format		formatIn;
     Format		formatOut;
     List<CSVRecord>	data;
@@ -223,11 +223,13 @@ public class Convert
       return "Input file points to a directory: " + m_InputFile;
 
     try {
-      formatIn  = (Format) m_InputFormat.newInstance();
+      formatIn = (Format) m_InputFormat.newInstance();
+      m_Logger.info("Input format: " + formatIn.getClass().getName());
       formatOut = (Format) m_OutputFormat.newInstance();
+      m_Logger.info("Output format: " + formatOut.getClass().getName());
     }
     catch (Exception e) {
-      return "Error configurating formats: " + e.toString();
+      return "Error configuring formats: " + e.toString();
     }
 
     if (!formatIn.canRead())
@@ -243,6 +245,23 @@ public class Convert
   }
 
   /**
+   * Performs the conversion.
+   *
+   * @return		null if successful, otherwise error message
+   */
+  public String execute() {
+    String	result;
+
+    result = doExecute();
+    if (result != null)
+      m_Logger.error(result);
+    else
+      m_Logger.info("Successfully converted!");
+
+    return result;
+  }
+
+  /**
    * Executes the conversion.
    *
    * @param args	the conversion
@@ -251,8 +270,6 @@ public class Convert
   public static void main(String[] args) throws Exception {
     Convert convert = new Convert();
     convert.setOptions(args);
-    String msg = convert.execute();
-    if (msg != null)
-      System.err.println(msg);
+    convert.execute();
   }
 }
