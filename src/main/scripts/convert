@@ -20,6 +20,8 @@
 
 #   Copyright (C) 2011-2015 University of Waikato, Hamilton, NZ
 
+#   Copyright (C) 2016 FracPete
+
 BASEDIR=`dirname $0`/..
 BASEDIR=`(cd "$BASEDIR"; pwd)`
 
@@ -88,8 +90,8 @@ if $cygwin; then
 fi
 
 # check options
-MEMORY=512m
-MAIN=nz.ac.waikato.cms.supernova.gui.Supernova
+MEMORY=256m
+MAIN=com.github.fracpete.gpsformats4j.Convert
 
 # launch class
 "$JCMD" \

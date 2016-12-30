@@ -19,14 +19,18 @@
 @REM Copyright (C) 2011-2015 University of Waikato, Hamilton, NZ
 @REM ----------------------------------------------------------------------------
 
+@REM ----------------------------------------------------------------------------
+@REM Copyright (C) 2016 FracPete
+@REM ----------------------------------------------------------------------------
+
 @echo off
 
 set ERROR_CODE=0
 
 @REM Slurp the command line arguments.  This loop allows for an unlimited number
 @REM of arguments (up to the command line limit, anyway).
-set MEMORY=512m
-set MAIN=nz.ac.waikato.cms.supernova.gui.Supernova
+set MEMORY=256m
+set MAIN=com.github.fracpete.gpsformats4j.Convert
 set BASEDIR=%~dp0\..
 set JCMD=java
 if not "%JAVA_HOME%"=="" set JCMD="%JAVA_HOME%\bin\java"
