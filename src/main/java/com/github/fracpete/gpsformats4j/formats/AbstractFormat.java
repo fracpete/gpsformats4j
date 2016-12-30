@@ -19,9 +19,8 @@
  */
 package com.github.fracpete.gpsformats4j.formats;
 
+import com.github.fracpete.gpsformats4j.core.BaseObject;
 import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
@@ -32,17 +31,8 @@ import java.util.List;
  * @author FracPete (fracpete at gmail dot com)
  */
 public abstract class AbstractFormat
+  extends BaseObject
   implements Format {
-
-  /** the logger instance. */
-  protected Logger m_Logger;
-
-  /**
-   * Initializes the format.
-   */
-  protected AbstractFormat() {
-    m_Logger = LoggerFactory.getLogger(getClass());
-  }
 
   /**
    * Returns whether reading is supported.
