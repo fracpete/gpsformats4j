@@ -45,3 +45,14 @@ String msg = convert.execute();
 if (msg != null)
   System.err.println(msg);
 ```
+
+## Maven
+
+Use the following dependency to include the library in your Maven project:
+```xml
+   <dependency>
+      <groupId>com.github.fracpete</groupId>
+      <artifactId>gpsformats4j</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+```
