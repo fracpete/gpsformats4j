@@ -13,6 +13,7 @@ Currently the following formats are supported:
 * CSV (requires columns in this order: track, time, lat, lon, elevation)
 * [GPX](https://en.wikipedia.org/wiki/GPS_Exchange_Format)
 * [TCX](https://en.wikipedia.org/wiki/Training_Center_XML)
+* [KML](https://en.wikipedia.org/wiki/Keyhole_Markup_Language) (only `LineString` tag)
 
 ## Example usage
 
@@ -53,6 +54,6 @@ Use the following dependency to include the library in your Maven project:
     <dependency>
       <groupId>com.github.fracpete</groupId>
       <artifactId>gpsformats4j</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2</version>
     </dependency>
 ```

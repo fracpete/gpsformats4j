@@ -21,15 +21,26 @@
 package com.github.fracpete.gpsformats4j.formats;
 
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVRecordFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * KML format (Keyhole Markup Language).
  * https://developers.google.com/kml/documentation/kmlreference
+ *
+ * Only handles absolute altitudes.
  *
  * @author FracPete (fracpete at gmail dot com)
  * @see Formats#allFormats()
@@ -44,7 +55,7 @@ public class KML
    */
   @Override
   public boolean canRead() {
-    return false;
+    return true;
   }
 
   /**
@@ -55,7 +66,79 @@ public class KML
    */
   @Override
   public List<CSVRecord> read(File input) {
-    return null;
+    List<CSVRecord>	result;
+    Document 		doc;
+    String		track;
+    NodeList		pms;
+    NodeList		list;
+    Element		pm;
+    Element 		coordinates;
+    int			i;
+    int			c;
+    String[]		coords;
+    String[]		parts;
+    CSVRecord		rec;
+    List<String>	values;
+    Map<String,Integer> map;
+    Calendar		cal;
+    SimpleDateFormat	df;
+    int			count;
+
+    result = new ArrayList<>();
+    df     = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    count  = 0;
+    map    = new HashMap<>();
+    map.put(KEY_TRACK, 0);
+    map.put(KEY_TIME, 1);
+    map.put(KEY_LAT, 2);
+    map.put(KEY_LON, 3);
+    map.put(KEY_ELEVATION, 4);
+    try {
+      doc  = readXML(input);
+      pms  = doc.getElementsByTagName("Placemark");
+      for (i = 0; i < pms.getLength(); i++) {
+	pm   = (Element) pms.item(i);
+	list = pm.getElementsByTagName("name");
+	if (list.getLength() == 1)
+	  track = list.item(0).getTextContent().trim();
+	else
+	  track = "" + i;
+	cal = new GregorianCalendar();
+	cal.set(Calendar.YEAR, 2000);
+	cal.set(Calendar.MONTH, Calendar.JANUARY);
+	cal.set(Calendar.DAY_OF_MONTH, 1);
+	cal.set(Calendar.HOUR_OF_DAY, 0);
+	cal.set(Calendar.MINUTE, 0);
+	cal.set(Calendar.SECOND, 0);
+	list = pm.getElementsByTagName("coordinates");
+	for (c = 0; c < list.getLength(); c++) {
+	  coordinates = (Element) list.item(c);
+	  coords      = coordinates.getTextContent().split(" ");
+	  for (String coord: coords) {
+	    if (coord.trim().isEmpty())
+	      continue;
+	    parts = coord.trim().split(",");
+	    if (parts.length == 3) {
+	      count++;
+	      cal.add(Calendar.SECOND, 1);
+	      values = new ArrayList<>();
+	      values.add(track);
+	      values.add(df.format(cal.getTime()));
+	      values.addAll(Arrays.asList(parts));
+	      // add record
+	      rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map, null, count, -1);
+	      result.add(rec);
+	    }
+	  }
+	}
+      }
+    }
+    catch (Exception e) {
+      m_Logger.error("Failed to read: " + input, e);
+      return null;
+    }
+
+    return result;
   }
 
   /**
