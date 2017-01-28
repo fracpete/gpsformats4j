@@ -15,7 +15,7 @@
 
 /**
  * Formats.java
- * Copyright (C) 2016 FracPete
+ * Copyright (C) 2016-2017 FracPete
  */
 
 package com.github.fracpete.gpsformats4j.formats;
@@ -36,7 +36,8 @@ public class Formats {
     return new Class[]{
       CSV.class,
       GPX.class,
-      TCX.class
+      TCX.class,
+      KML.class,
     };
   }
 }
