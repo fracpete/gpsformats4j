@@ -7,6 +7,8 @@ How to make a release
   mvn release:clean release:prepare release:perform
   ```
 
+* push all changes
+
 * update release tag on github (`vX.Y.X`, with `X.Y.Z` taken from 
   `pom.xml`), add some release notes and upload the `-bin.zip`
 
