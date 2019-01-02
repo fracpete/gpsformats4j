@@ -54,6 +54,6 @@ Use the following dependency to include the library in your Maven project:
     <dependency>
       <groupId>com.github.fracpete</groupId>
       <artifactId>gpsformats4j</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.4</version>
     </dependency>
 ```
