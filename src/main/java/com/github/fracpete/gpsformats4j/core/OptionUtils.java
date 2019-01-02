@@ -66,7 +66,7 @@ public class OptionUtils {
     for (i = 0; i < options.length; i++) {
       if (i > 0)
         result.append(" ");
-      result.append("options");
+      result.append(options[i]);
     }
 
     return result.toString();
