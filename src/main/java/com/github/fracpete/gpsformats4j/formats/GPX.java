@@ -13,9 +13,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
+/*
  * GPX.java
- * Copyright (C) 2016 FracPete
+ * Copyright (C) 2016-2019 FracPete
  */
 
 package com.github.fracpete.gpsformats4j.formats;
@@ -27,7 +27,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,30 @@ public class GPX
   @Override
   public boolean canRead() {
     return true;
+  }
+
+  /**
+   * Create a dummy timestamp.
+   *
+   * @param index	the index of the item (used as seconds)
+   * @return		the generated timestamp (yyyy-MM-dd'T'HH:mm:ss)
+   */
+  protected String dummyTimestamp(int index) {
+    Calendar		cal;
+    SimpleDateFormat	dformat;
+
+    cal = new GregorianCalendar();
+    cal.set(Calendar.YEAR, 2000);
+    cal.set(Calendar.MONTH, 0);
+    cal.set(Calendar.DAY_OF_MONTH, 1);
+    cal.set(Calendar.HOUR, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.add(Calendar.SECOND, index);
+
+    dformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+    return dformat.format(cal.getTime());
   }
 
   /**
@@ -92,16 +119,22 @@ public class GPX
 	  values.add("" + t);
 	  // time
 	  children = seg.getElementsByTagName("time");
-	  values.add(children.item(0).getTextContent().trim());
+	  if (children.getLength() > 0)
+	    values.add(children.item(0).getTextContent().trim());
+	  else
+	    values.add(dummyTimestamp(p));
 	  // lat
 	  values.add(seg.getAttribute("lat").trim());
 	  // lon
 	  values.add(seg.getAttribute("lon").trim());
 	  // elevation
 	  children = seg.getElementsByTagName("ele");
-	  values.add(children.item(0).getTextContent().trim());
+	  if (children.getLength() > 0)
+	    values.add(children.item(0).getTextContent().trim());
+	  else
+	    values.add("0");
 	  // add record
-	  rec = CSVRecordFactory.newRecord(values.toArray(new String[values.size()]), map, null, count, -1);
+	  rec = CSVRecordFactory.newRecord(values.toArray(new String[0]), map, null, count, -1);
 	  result.add(rec);
 	}
       }
