@@ -13,9 +13,9 @@ package com.github.fracpete.gpsformats4j;/*
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
+/*
  * Convert.java
- * Copyright (C) 2016 FracPete
+ * Copyright (C) 2016-2025 FracPete
  */
 
 import com.github.fracpete.gpsformats4j.core.BaseObject;
@@ -25,9 +25,9 @@ import com.github.fracpete.gpsformats4j.formats.Format;
 import com.github.fracpete.gpsformats4j.formats.FormatWithOptionHandling;
 import com.github.fracpete.gpsformats4j.formats.Formats;
 import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.helper.HelpScreenException;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.Namespace;
-import net.sourceforge.argparse4j.internal.HelpScreenException;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.File;
@@ -92,7 +92,7 @@ public class Convert
     for (i = 0; i < Formats.allFormats().length; i++)
       formats[i] = Formats.allFormats()[i].getSimpleName();
 
-    m_Parser = ArgumentParsers.newArgumentParser(getClass().getSimpleName());
+    m_Parser = ArgumentParsers.newFor(getClass().getSimpleName()).build();
 
     m_Parser.description("Converts GPS formats.");
     m_Parser.defaultHelp(true);
@@ -308,7 +308,7 @@ public class Convert
       m_Logger.info("Output format: " + formatOut.getClass().getName());
     }
     catch (Exception e) {
-      return "Error configuring formats: " + e.toString();
+      return "Error configuring formats: " + e;
     }
 
     if (!formatIn.canRead())
