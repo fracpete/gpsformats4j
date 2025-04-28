@@ -51,6 +51,7 @@ if (msg != null)
 
 The following releases are available:
 
+* [0.0.7](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.7/gpsformats4j-0.0.7-bin.zip)
 * [0.0.6](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.6/gpsformats4j-0.0.6-bin.zip)
 * [0.0.5](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.5/gpsformats4j-0.0.5-bin.zip)
 * [0.0.4](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.4/gpsformats4j-0.0.4-bin.zip)
@@ -65,6 +66,6 @@ Use the following dependency to include the library in your Maven project:
     <dependency>
       <groupId>com.github.fracpete</groupId>
       <artifactId>gpsformats4j</artifactId>
-      <version>0.0.5</version>
+      <version>0.0.7</version>
     </dependency>
 ```
