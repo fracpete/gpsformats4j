@@ -5,7 +5,7 @@
 
   <groupId>com.github.fracpete</groupId>
   <artifactId>gpsformats4j</artifactId>
-  <version>0.0.6</version>
+  <version>0.0.7-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>gpsformats4j</name>
@@ -100,7 +100,7 @@
     <connection>scm:git:ssh://git@github.com/fracpete/gpsformats4j</connection>
     <developerConnection>scm:git:ssh://git@github.com/fracpete/gpsformats4j</developerConnection>
     <url>https://github.com/fracpete/gpsformats4j</url>
-    <tag>gpsformats4j-0.0.6</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <build>
