@@ -34,17 +34,25 @@ Using Java code:
 
 ```java
 import com.github.fracpete.gpsformats4j.Convert;
+import com.github.fracpete.gpsformats4j.formats.GPX;
+import com.github.fracpete.gpsformats4j.formats.TCX;
 import java.io.File;
-...
-Convert convert = new Convert();
-convert.setInputFile(new File("test.tcx"));
-convert.setInputFormat("TCX");
-convert.setOutputFile(new File("out.gpx"));
-convert.setOutputFormat("GPX");
-String msg = convert.execute();
-// successful if null returned:
-if (msg != null)
-  System.err.println(msg);
+
+public class MyConversion {
+  
+  public static void main(String[] args) {
+    Convert convert = new Convert();
+    convert.setInputFile(new File("test.tcx"));
+    convert.setInputFormat(TCX.class);
+    convert.setOutputFile(new File("out.gpx"));
+    convert.setOutputFormat(GPX.class);
+
+    String msg = convert.execute();
+    // successful if null returned:
+    if (msg != null)
+      System.err.println(msg);
+  }
+}
 ```
 
 ## Releases
