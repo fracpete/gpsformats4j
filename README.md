@@ -51,6 +51,7 @@ if (msg != null)
 
 The following releases are available:
 
+* [0.0.6](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.6/gpsformats4j-0.0.6-bin.zip)
 * [0.0.5](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.5/gpsformats4j-0.0.5-bin.zip)
 * [0.0.4](https://github.com/fracpete/gpsformats4j/releases/download/gpsformats4j-0.0.4/gpsformats4j-0.0.4-bin.zip)
 * [0.0.2](https://github.com/fracpete/gpsformats4j/releases/download/v0.0.2/gpsformats4j-0.0.2-bin.zip)
