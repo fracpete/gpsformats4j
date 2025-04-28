@@ -15,6 +15,7 @@
 
   <name>gpsformats4j</name>
   <description>GPS format conversions in Java.</description>
+  <url>https://github.com/fracpete/gpsformats4j</url>
   <licenses>
     <license>
       <name>GNU General Public License 3</name>
