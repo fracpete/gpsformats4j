@@ -18,3 +18,4 @@ How to make a release
 * update release tag on github (`vX.Y.X`, with `X.Y.Z` taken from 
   `pom.xml`), add some release notes and upload the `-bin.zip`
 
+* add the release to [README.md](README.md#releases)
