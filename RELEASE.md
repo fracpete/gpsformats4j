@@ -19,3 +19,5 @@ How to make a release
   `pom.xml`), add some release notes and upload the `-bin.zip`
 
 * add the release to [README.md](README.md#releases)
+
+* update the Maven artifact version in [README.md](README.md#maven)
